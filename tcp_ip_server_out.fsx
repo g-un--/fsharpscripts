@@ -20,13 +20,10 @@ let stream (client:TcpClient) = client.GetStream()
 let tcp_ip_server (sourceip,sourceport) =
     let server = new TcpListener(IPAddress.Parse(sourceip),sourceport)
     server.Start()
-    while true do
-        let client = server.AcceptTcpClient()
-        let t = new Thread(ThreadStart(fun _ ->
-            try
-                stream (client) |> read 
-            with |_ -> client.Close())
-        , IsBackground = true)
-        t.Start()
+        
+    let client = server.AcceptTcpClient()
+    try
+        stream (client) |> read 
+    with |_ -> client.Close()
 
 tcp_ip_server (fsi.CommandLineArgs.[1], int fsi.CommandLineArgs.[2])
