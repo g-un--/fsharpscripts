@@ -21,6 +21,7 @@ let tcp_ip_client (targetip, targetport) =
     let client = new TcpClient(targetip, targetport)
     try
         stream (client) |> read
-    with |_ -> client.Close()
+    finally 
+        client.Close()
 
 tcp_ip_client (fsi.CommandLineArgs.[1], int fsi.CommandLineArgs.[2])

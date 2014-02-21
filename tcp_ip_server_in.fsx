@@ -24,6 +24,7 @@ let tcp_ip_server (sourceip,sourceport) =
     let client = server.AcceptTcpClient()
     try
         stream (client) |> read 
-    with |_ -> client.Close()
+    finally 
+        client.Close()
 
 tcp_ip_server (fsi.CommandLineArgs.[1], int fsi.CommandLineArgs.[2])

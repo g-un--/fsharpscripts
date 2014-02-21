@@ -27,7 +27,8 @@ let tcp_ip_server (sourceip,sourceport) =
         let t = new Thread(ThreadStart(fun _ ->
             try
                 mirror System.Console.In <| writer client |> Async.RunSynchronously 
-            with |_ -> client.Close())
+            finally 
+                client.Close())
         , IsBackground = true)
         t.Start()
 
