@@ -21,7 +21,6 @@ let rec bindProgram f program =
 type CalcProgramBuilder() = 
     member this.Return(x) = returnProgram x
     member this.Bind(x,f) = bindProgram f x 
-    member this.Zero(x) = returnProgram ()
 
 let calcProgram = CalcProgramBuilder()
 
